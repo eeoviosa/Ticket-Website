@@ -1,0 +1,57 @@
+{% extends 'tickets/layout.html' %}
+
+{%block body%}
+<div id = "holder">
+        <div id="body" style = "padding-bottom: 500px;">
+
+          {%if available%}
+              <div>
+                  <h3 style = "color: red; padding-left: 10px;"> Extra Tickets Remaining: {{available}}. <br>{{message}}</h3>
+              </div>
+          {%endif%}
+          <br>
+            <div  style = "background-color: aquamarine;">
+                <p style = "padding-left: 10px;">To Order Extra Tickets, Complete the Form Below:
+            </div>
+            <form class = 'was-validated' action="{% url 'extrat'%}" method = 'POST'>
+              {%csrf_token%}
+              <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-control-input" id="exampleCheck1" required>
+                  <label class="form-check-label" for="exampleCheck1">Are You Sure You Want To Order Extra Tickets?</label>
+              </div>
+
+              <div class="mb-3 form-check">
+                  <label style = "margin-bottom: 0px;"class="form-check-label" type = num for="exampleCheck1">Enter Your Student ID </label>
+                  <div style = "padding-top:0px; margin:0px; font-weight:bold;" id="below" class="form-text">Enter your txwes student id without the leading zeros.</div>
+                  <input type= number class="form-control"  name = 'id' id="exampleCheck1" aria-describedby ="validationServerStudentIDFeedback below" required >
+                  <input type = "hidden" name = 'ticket_order' value = {{info.tickets_ordered}} >
+              </div>
+
+               <div id="validationServerStudentIDFeedback" class="invalid-feedback">
+                    Please Enter a Valid Student ID.
+               </div>
+                <div class="form-check mb-3">
+                          <label style = "padding-bottom:0px; margin:0px;" for="extra_num_of_tickets" class="form-label">Extra Tickets</label>
+                          <div style = "padding-top:0px; margin:0px; font-weight:bold;" id="extra_info" class="form-text">Select how many additional tickets you would need if any.</div>
+                          <select type = number class="form-select" name = "extra" id = extra_num_of_tickets aria-describedby="validationServerTicketsFeedback extra_info" required>
+                              <option selected disabled value>Choose.....</option>
+                              <option type = number value = 0>0</option>
+                              {% for tickets in extra_tickets%}
+                              <option type = number value={{tickets}}>{{tickets}}</option>
+                              {%endfor%}
+                          </select>
+                </div>
+              <button style = " margin: 10px;"type="submit" class="btn btn-primary">Submit</button>
+            </form>
+          <br>
+
+        </div>
+         <footer style = "height: 500px;">
+
+          <div style = " height: 100%; background-color: black;" class ="box">
+
+          </div>
+      </footer>
+
+</div>
+{%endblock%}

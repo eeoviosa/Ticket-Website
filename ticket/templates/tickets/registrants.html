@@ -1,0 +1,62 @@
+  {% extends 'tickets/layout.html'%}
+
+  {%block body%}
+  <div id = "holder">
+        <div id="body" style = "padding-bottom: 500px;">
+
+          {% if info%}
+              <h1 style = "padding-left: 10px;">You Have Already Registered, with this Information: </h1>
+              <div style = 'background-color: aquamarine;'>
+                  <table style = "font-family: 'Times New Roman', Times, serif;" >
+                      <tr><td style = "font-size: 50px; padding-left: 10px;">First Name: {{info.first_name}}</td></tr>
+                      <tr><td td style = "font-size: 50px; padding-left: 10px;">Last Name: {{info.last_name}}</td></tr>
+                      <tr><td td style = "font-size: 50px; padding-left: 10px;">Student ID: {{info.studentID}}</td></tr>
+                      <tr><td td style = "font-size: 50px; padding-left: 10px;">Base Tickets: {{info.tickets_ordered}}</td></tr>
+                      <tr><td td style = "font-size: 50px; padding-left: 10px;">Extra Tickets: {{info.extra_tickets}}</td></tr>
+                  </table>
+              </div>
+          {%endif%}
+          <br>
+
+          {%if message%}
+              <div>
+                  <h3 style = "color: red; padding-left: 10px;"> {{message}}</h3>
+              </div>
+          {%endif%}
+          <br>
+
+          <div  style = "background-color: aquamarine;">
+          <p style = "padding-left: 10px;">To Change Your Information and Submit Another Form, Complete the Questions Below:
+          </div>
+
+          <form class ='was-validated'action = "{% url 'newForm'%}" method = 'POST'>
+              {%csrf_token%}
+              <div class="mb-3 form-check">
+                  <input type="checkbox" class="form-control-input" id="exampleCheck1" required>
+                  <label class="form-check-label" for="exampleCheck1">Are You Sure You Want To Edit Your Submission? Previous Data Will be Deleted</label>
+              </div>
+
+              <div class="mb-3 form-check">
+                  <label style = "margin-bottom: 0px;"class="form-label" type = num for="exampleCheck1">Enter Your Student ID </label>
+                  <div style = "padding-top:0px; margin:0px; font-weight:bold;" id="below" class="form-text">Enter your txwes student id without the leading zeros.</div>
+                  <input type= number class="form-control"  name = 'id' id="exampleCheck1" aria-describedby="validationServerStudentIDFeedback below"required >
+                  <input type = "hidden" name = 'ticket_order' value = {{info.tickets_ordered}}>
+              </div>
+
+              <div id="validationServerStudentIDFeedback" class="invalid-feedback">
+                    Please Enter a Valid Student ID.
+               </div>
+              <button style = " margin: 10px;"type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          <br>
+
+      <footer style = "height: 500px;">
+
+          <div style = " height: 100%; background-color: black;" class ="box">
+
+          </div>
+      </footer>
+      </div>
+  </div>
+
+  {%endblock%}
